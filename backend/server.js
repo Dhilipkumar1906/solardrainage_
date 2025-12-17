@@ -16,7 +16,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/solardrainage")
 app.use("/api/lids", lidRoutes);
 
 // every 15 seconds
-cron.schedule("*/15 * * * * *", fetchThingSpeak);
+// cron.schedule("*/15 * * * * *", fetchThingSpeak);
 
 app.listen(5000, () =>
   console.log("🚀 Server running on port 5000")
