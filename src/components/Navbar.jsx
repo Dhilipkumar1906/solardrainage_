@@ -1,108 +1,60 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [active, setActive] = useState("home");
+  const [open, setOpen] = useState(false);
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleClick = (section) => {
-    // 🔥 LIVE STATUS → ROUTE
-    if (section === "live") {
-      navigate("/live-status");
-      setActive("live");
-      return;
-    }
-
-    // 🔥 HOME PAGE SECTIONS
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        section === "home"
-          ? window.scrollTo({ top: 0, behavior: "smooth" })
-          : scrollTo(section);
-      }, 200);
-    } else {
-      section === "home"
-        ? window.scrollTo({ top: 0, behavior: "smooth" })
-        : scrollTo(section);
-    }
-  };
-
-  // 🔥 SCROLL SPY (only on home page)
-  useEffect(() => {
-    if (location.pathname !== "/") {
-      setActive("live");
-      return;
-    }
-
-    const onScroll = () => {
-      const y = window.scrollY;
-      const sections = [
-        { id: "contact", key: "contact" },
-        { id: "team", key: "team" },
-        { id: "services", key: "services" },
-        { id: "about", key: "about" },
-      ];
-
-      for (let sec of sections) {
-        const el = document.getElementById(sec.id);
-        if (el && y >= el.offsetTop - 160) {
-          setActive(sec.key);
-          return;
-        }
-      }
-
-      setActive("home");
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [location.pathname]);
-
-  const NavItem = ({ label, section }) => (
-    <button
-      onClick={() => handleClick(section)}
-      className="relative group text-sm font-medium text-white"
-    >
-      {label}
-      <span
-        className={`absolute left-0 -bottom-1 h-[2px] bg-emerald-400 transition-all duration-300
-        ${
-          active === section
-            ? "w-full"
-            : "w-0 group-hover:w-full"
-        }`}
-      />
-    </button>
-  );
+  const linkClass = ({ isActive }) =>
+    `relative px-3 py-2 text-sm font-medium transition
+     ${isActive ? "text-emerald-400" : "text-white"}
+     after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-emerald-400
+     after:transition-all after:duration-300
+     ${isActive ? "after:w-full" : "after:w-0 hover:after:w-full"}`;
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <div className="bg-black/60 backdrop-blur-lg border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          <h1
-            onClick={() => handleClick("home")}
-            className="text-white text-2xl font-semibold cursor-pointer"
-          >
-            SolarDrainage
+    <header className="fixed top-0 left-0 w-full z-50 bg-black/60 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+
+          {/* LOGO */}
+          <h1 className="text-xl font-bold text-white">
+            Solar<span className="text-emerald-400">Drainage</span>
           </h1>
 
-          <nav className="hidden md:flex gap-10">
-            <NavItem label="Home" section="home" />
-            <NavItem label="About" section="about" />
-            <NavItem label="Services" section="services" />
-            <NavItem label="Live Status" section="live" />
-            <NavItem label="Team" section="team" />
-            <NavItem label="Contact" section="contact" />
+          {/* DESKTOP MENU */}
+          <nav className="hidden md:flex space-x-6">
+            <NavLink to="/" className={linkClass}>Home</NavLink>
+            <NavLink to="/about" className={linkClass}>About</NavLink>
+            <NavLink to="/services" className={linkClass}>Services</NavLink>
+            <NavLink to="/live-status" className={linkClass}>Live Status</NavLink>
+            <NavLink to="/team" className={linkClass}>Team</NavLink>
+            <NavLink to="/contact" className={linkClass}>Contact</NavLink>
           </nav>
+
+          {/* MOBILE BUTTON */}
+          <button
+            className="md:hidden text-white"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="md:hidden bg-black/90 backdrop-blur-lg">
+          <div className="flex flex-col px-6 py-4 space-y-4">
+            <NavLink onClick={() => setOpen(false)} to="/" className={linkClass}>Home</NavLink>
+            <NavLink onClick={() => setOpen(false)} to="/about" className={linkClass}>About</NavLink>
+            <NavLink onClick={() => setOpen(false)} to="/services" className={linkClass}>Services</NavLink>
+            <NavLink onClick={() => setOpen(false)} to="/live-status" className={linkClass}>Live Status</NavLink>
+            <NavLink onClick={() => setOpen(false)} to="/team" className={linkClass}>Team</NavLink>
+            <NavLink onClick={() => setOpen(false)} to="/contact" className={linkClass}>Contact</NavLink>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
