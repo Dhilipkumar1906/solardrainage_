@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.animate-show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+html {
+  scroll-behavior: smooth;
+}
