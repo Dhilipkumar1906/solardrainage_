@@ -4,11 +4,8 @@ const cron = require("node-cron");
 const fetchThingSpeak = require("./cron/fetchThingSpeak");
 const lidRoutes = require("./routes/lidRoutes");
 const cors = require("cors");
-const cors = require("cors");
 
-app.use(cors({
-  origin: "*"
-}));
+
 
 const app = express();
 app.use(express.json());
