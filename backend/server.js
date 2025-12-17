@@ -4,9 +4,13 @@ const cron = require("node-cron");
 const fetchThingSpeak = require("./cron/fetchThingSpeak");
 const lidRoutes = require("./routes/lidRoutes");
 const cors = require("cors");
+const cors = require("cors");
+
+app.use(cors({
+  origin: "*"
+}));
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
 mongoose.connect("mongodb://127.0.0.1:27017/solardrainage")
