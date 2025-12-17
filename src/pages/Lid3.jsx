@@ -60,7 +60,7 @@ export default function Lid3() {
           ))}
         </div><br />
           <button
-      onClick={() => navigate("/history/TNAGAR_LID_2")}
+      onClick={() => navigate("/history/TNAGAR_LID_3")}
                 className="bg-emerald-500 hover:bg-emerald-600 transition px-8 py-4 rounded-full font-semibold"
               >
             History
