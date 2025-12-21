@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-export default function Lid2() {
+export default function Lid1() {
   const navigate = useNavigate();
   const [ts, setTs] = useState(Date.now());
 
@@ -72,7 +72,7 @@ export default function Lid2() {
               <iframe
                 key={ts}
                 className="w-full h-[320px] rounded-xl"
-                src={`https://thingspeak.com/channels/3205130/charts/${chart.field}?bgcolor=%230c0f0f&color=${chart.color}&dynamic=true&ts=${ts}`}
+                src={`https://thingspeak.com/channels/3209958/charts/${chart.field}?bgcolor=%230c0f0f&color=${chart.color}&dynamic=true&ts=${ts}`}
               />
             </div>
           ))}
