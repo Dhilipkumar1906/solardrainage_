@@ -156,19 +156,19 @@ export default function LiveStatus() {
           <Card
             title="T-Nagar Lid 1 (Hardware)"
             data={lid1}
-            onClick={() => navigate("/history/TNAGAR_LID_1")}
+            onClick={() => navigate("/lid1")}
           />
 
           <Card
             title="T-Nagar Lid 2"
             data={lid2}
-            onClick={() => navigate("/history/TNAGAR_LID_2")}
+            onClick={() => navigate("/lid2")}
           />
 
           <Card
             title="T-Nagar Lid 3"
             data={lid3}
-            onClick={() => navigate("/history/TNAGAR_LID_3")}
+            onClick={() => navigate("/lid3")}
           />
         </div>
 
