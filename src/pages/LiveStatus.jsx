@@ -154,7 +154,7 @@ export default function LiveStatus() {
         {/* CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Card
-            title="T-Nagar Lid 1 (Hardware)"
+            title="T-Nagar Lid 1 "
             data={lid1}
             onClick={() => navigate("/lid1")}
           />
