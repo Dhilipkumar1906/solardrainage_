@@ -15,26 +15,10 @@ export default function Lid1() {
   }, []);
 
   const charts = [
-    {
-      title: "Water Level",
-      color: "%2300ff99",
-      field: 1,
-    },
-    {
-      title: "Temperature",
-      color: "%23ff9800",
-      field: 2,
-    },
-    {
-      title: "Lid Status",
-      color: "%23ff5252",
-      field: 3,
-    },
-    {
-      title: "Gas Level",
-      color: "%236ab7ff",
-      field: 4,
-    },
+    { title: "Water Level", color: "%2300ff99", field: 1 },
+    { title: "Temperature", color: "%23ff9800", field: 2 },
+    { title: "Lid Status", color: "%23ff5252", field: 3 },
+    { title: "Gas Level", color: "%236ab7ff", field: 4 },
   ];
 
   return (
@@ -42,20 +26,19 @@ export default function Lid1() {
       <div className="max-w-7xl mx-auto px-6">
 
         {/* HEADER */}
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => navigate("/live-status")}
-            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300"
-          >
-            <ArrowLeft size={20} /> Back
-          </button>
-        </div>
+        <button
+          onClick={() => navigate("/live-status")}
+          className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 mb-8"
+        >
+          <ArrowLeft size={20} /> Back
+        </button>
 
         <h1 className="text-3xl md:text-4xl font-bold text-emerald-400 mb-2">
           T-Nagar Lid 1 – Live Monitoring
         </h1>
+
         <p className="text-gray-400 mb-12">
-          Real-time sensor graphs (auto-refresh every 15 seconds)
+          Hardware based real-time monitoring (auto refresh – 15s)
         </p>
 
         {/* GRAPHS */}
@@ -76,19 +59,22 @@ export default function Lid1() {
               />
             </div>
           ))}
-        </div><br />
-           <button
-                onClick={() => navigate("/history/TNAGAR_LID_1")}
-                className="bg-emerald-500 hover:bg-emerald-600 transition px-8 py-4 rounded-full font-semibold"
-              >
-                History
-              </button>
+        </div>
+
+        <div className="mt-10">
+          <button
+            onClick={() => navigate("/history/TNAGAR_LID_1")}
+            className="bg-emerald-500 hover:bg-emerald-600 px-8 py-4 rounded-full font-semibold"
+          >
+            View History
+          </button>
+        </div>
+
         <div className="text-center mt-14 text-gray-400">
           Data source: ThingSpeak • Status:{" "}
           <span className="text-emerald-400 font-semibold">Live</span>
         </div>
       </div>
-     
     </section>
   );
 }
