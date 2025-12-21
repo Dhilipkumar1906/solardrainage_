@@ -13,6 +13,7 @@ import {
 export default function LiveStatus() {
   const navigate = useNavigate();
 
+  const [lid1, setLid1] = useState({});
   const [lid2, setLid2] = useState({});
   const [lid3, setLid3] = useState({});
   const [alert, setAlert] = useState(false);
@@ -20,7 +21,7 @@ export default function LiveStatus() {
 
   const isAdmin = localStorage.getItem("role") === "admin";
 
-  // 🔊 Beep sound (looped)
+  // 🔊 Beep sound
   const alarmRef = useRef(
     new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg")
   );
@@ -47,9 +48,7 @@ export default function LiveStatus() {
 
     if (lidOpen) {
       setAlert(true);
-      if (alarmOn && isAdmin) {
-        alarmRef.current.play();
-      }
+      if (alarmOn && isAdmin) alarmRef.current.play();
     } else {
       alarmRef.current.pause();
       alarmRef.current.currentTime = 0;
@@ -58,7 +57,13 @@ export default function LiveStatus() {
 
   useEffect(() => {
     const load = () => {
+      // 🔹 LID 1 – HARDWARE
+      fetchThingSpeak("3209958", "6SH8TQKKMJ78NQ4Z", setLid1);
+
+      // 🔹 LID 2
       fetchThingSpeak("3205130", "1T51GZ5IFFAHKOEF", setLid2);
+
+      // 🔹 LID 3
       fetchThingSpeak("3205159", "8BXXA18F0MRLY7DO", setLid3);
     };
 
@@ -91,17 +96,17 @@ export default function LiveStatus() {
 
       <p className="flex gap-3 mb-2">
         <Droplet className="text-emerald-400" />
-        Water Level: {data?.water || "Medium"}
+        Water Level: {data?.water || "-"}
       </p>
 
       <p className="flex gap-3 mb-2">
         <Wind className="text-emerald-400" />
-        Gas Level: {data?.gas || "Critical"}
+        Gas Level: {data?.gas || "-"}
       </p>
 
       <p className="flex gap-3">
         <Thermometer className="text-emerald-400" />
-        Temperature: {data?.temp || "30"}°C
+        Temperature: {data?.temp || "-"}°C
       </p>
     </div>
   );
@@ -121,7 +126,7 @@ export default function LiveStatus() {
             </p>
           </div>
 
-          {/* 🔐 ADMIN ONLY ALARM TOGGLE */}
+          {/* ADMIN ALARM */}
           {isAdmin && (
             <button
               onClick={() => {
@@ -129,12 +134,8 @@ export default function LiveStatus() {
                 alarmRef.current.pause();
                 alarmRef.current.currentTime = 0;
               }}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full font-semibold transition
-              ${
-                alarmOn
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-gray-600 hover:bg-gray-500"
-              }`}
+              className={`flex items-center gap-2 px-5 py-2 rounded-full font-semibold
+              ${alarmOn ? "bg-red-500" : "bg-gray-600"}`}
             >
               {alarmOn ? <Volume2 /> : <VolumeX />}
               Alarm {alarmOn ? "ON" : "OFF"}
@@ -142,7 +143,7 @@ export default function LiveStatus() {
           )}
         </div>
 
-        {/* ALERT BAR */}
+        {/* ALERT */}
         {alert && (
           <div className="mb-8 p-4 rounded-lg bg-red-500/20 border border-red-500 flex gap-3">
             <AlertTriangle className="text-red-400" />
@@ -153,27 +154,21 @@ export default function LiveStatus() {
         {/* CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Card
-            title="T-Nagar Lid 1"
-            data={{
-              lid: "Closed",
-              water: "Medium",
-              gas: "Critical",
-              temp: "30",
-            }}
-            
+            title="T-Nagar Lid 1 (Hardware)"
+            data={lid1}
+            onClick={() => navigate("/history/TNAGAR_LID_1")}
           />
 
           <Card
             title="T-Nagar Lid 2"
             data={lid2}
-            onClick={() => navigate("/lid2")}
-            className="cursor-pointer"
+            onClick={() => navigate("/history/TNAGAR_LID_2")}
           />
 
           <Card
             title="T-Nagar Lid 3"
             data={lid3}
-            onClick={() => navigate("/lid3")}
+            onClick={() => navigate("/history/TNAGAR_LID_3")}
           />
         </div>
 

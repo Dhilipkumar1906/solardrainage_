@@ -37,6 +37,29 @@ async function fetchThingSpeak() {
       console.error(`❌ Error fetching ${lid.lidId}`, err.message);
     }
   }
+
+
+try {
+    const lid1Url =
+      "https://api.thingspeak.com/channels/3209958/feeds/last.json?api_key=6SH8TQKKMJ78NQ4Z";
+
+    const res1 = await axios.get(lid1Url);
+    const d1 = res1.data;
+
+    if (d1) {
+      await LidData.create({
+        lidId: "TNAGAR_LID_1",
+        waterLevel: d1.field1,
+        temperature: d1.field2,
+        lidStatus: d1.field3 == "1" ? "Open" : "Closed",
+        gasLevel: d1.field4
+      });
+
+      console.log("✅ Saved data for TNAGAR_LID_1 (Hardware)");
+    }
+  } catch (err) {
+    console.error("❌ Error fetching TNAGAR_LID_1", err.message);
+  }
 }
 
 module.exports = fetchThingSpeak;
