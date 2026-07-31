@@ -58,7 +58,7 @@ export default function LiveStatus() {
   const fetchLid = async (lidId, setData) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/lids/latest/${lidId}`
+        `http://solardrainage-backend.onrender.com/api/lids/latest/${lidId}`
       );
 
       const data = await res.json();
