@@ -7,6 +7,7 @@ import Lid1 from "./pages/Lid1";
 import Lid2 from "./pages/Lid2";
 import Lid3 from "./pages/Lid3";
 import LidHistory from "./pages/LidHistory";
+import Report from "./pages/Report";
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
          <Route path="/lid2" element={<Lid2 />} />
         <Route path="/lid3" element={<Lid3 />} />
          <Route path="/history/:lidId" element={<LidHistory />} />
+         <Route path="/report" element={<Report />} />
       </Routes>
     </>
   );
